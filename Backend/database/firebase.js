@@ -1,7 +1,10 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import config from "../utils/config";
+import { getFirestore } from "firebase/firestore";
+import * as admin from "firebase-admin";
+
+import config from "../src/utils/config";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -22,6 +25,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
+const db = getFirestore(app);
+admin.initializeApp();
 
-export default app;
-export { analytics };
+export {admin, analytics, app};
+export default db;

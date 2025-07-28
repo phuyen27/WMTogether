@@ -1,4 +1,4 @@
-import config from './utils/config.js';
+import config from './src/utils/config.js';
 import { createServer } from 'node:http';
 
 const server = createServer((req, res) => {
