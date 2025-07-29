@@ -1,83 +1,45 @@
-import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-//import { auth } from '../services/firebase';
-import { useNavigate } from 'react-router-dom';
+import React from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import LoginForm from "../components/LoginForm";
+import bgGif from "../assets/img/_bg.gif";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError('');
+  const handleLogin = async (email, password) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      navigate('/'); // chuyển về trang chủ
-    } catch (err) {
-      console.error(err);
-      setError('Email hoặc mật khẩu không đúng');
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const token = await userCredential.user.getIdToken();
+
+      Cookies.set("access_token", token, { expires: 7, path: "/" });
+
+      navigate("/home");
+    } catch (error) {
+      console.error("Đăng nhập thất bại:", error);
+      alert("Đăng nhập thất bại. Vui lòng kiểm tra lại email hoặc mật khẩu.");
     }
   };
 
   return (
-    <div style={styles.container}>
-      <h2>Đăng nhập</h2>
-      <form onSubmit={handleLogin} style={styles.form}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="password"
-          placeholder="Mật khẩu"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={styles.input}
-        />
-        {error && <p style={styles.error}>{error}</p>}
-        <button type="submit" style={styles.button}>Đăng nhập</button>
-      </form>
+    <div
+      className="flex items-center justify-center min-h-screen px-4 relative"
+      style={{
+        backgroundImage: `url(${bgGif})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      
+      
+      <div className="relative z-10 w-full max-w-md">
+        <LoginForm onLogin={handleLogin} />
+      </div>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    maxWidth: '400px',
-    margin: '60px auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '8px',
-    textAlign: 'center'
-  },
-  form: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px'
-  },
-  input: {
-    padding: '10px',
-    fontSize: '16px'
-  },
-  button: {
-    padding: '12px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    fontWeight: 'bold',
-    border: 'none',
-    cursor: 'pointer',
-    borderRadius: '4px'
-  },
-  error: {
-    color: 'red'
-  }
 };
 
 export default LoginPage;
