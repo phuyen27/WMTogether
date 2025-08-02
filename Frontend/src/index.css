@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+/* src/index.css */
+
+/* Tailwind directives (make sure these are at the top) */
+html {
+    height: 100%;
+    /* Make the HTML element take 100% of the viewport's height */
+    width: 100%;
+    /* Make the HTML element take 100% of the viewport's width */
+    margin: 0;
+    /* Ensure no default margin on html */
+    padding: 0;
+    /* Ensure no default padding on html */
+    overflow: hidden;
+}
+
+body {
+    height: 100%;
+    /* Make the BODY element take 100% of its parent (HTML) height */
+    width: 100%;
+    /* Make the BODY element take 100% of its parent (HTML) width */
+    margin: 0;
+    /* Remove default browser margin on body */
+    padding: 0;
+    /* Remove default browser padding on body */
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+    /* Make #root take 100% of its parent (BODY) height */
+    width: 100%;
+    /* Make # take 100% of its parent (BODY) width */
+}

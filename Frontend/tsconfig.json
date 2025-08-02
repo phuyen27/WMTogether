@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".", // set to project root
+        "paths": {
+            "@/*": [
+                "src/*"
+            ] // map @ to src/*
+        },
+        "jsx": "react-jsx",
+        "esModuleInterop": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "src/**/*.tsx"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts",
+        "**/*.spec.tsx"
+    ]
+}
